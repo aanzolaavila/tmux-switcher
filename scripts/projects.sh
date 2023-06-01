@@ -8,7 +8,7 @@ source "./utils.sh"
 
 get_locations() {
   local locs
-  locs=$(get_tmux_option @tmux-switcher-locations "")
+  locs=$(get_tmux_option @tmux-switcher-locations "$HOME")
 
   echo -n "${locs}"
 }

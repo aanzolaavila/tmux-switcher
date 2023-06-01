@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-declare -r CURRENT_DIR
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+declare -r CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # shellcheck source=utils.sh
 source "$CURRENT_DIR/scripts/utils.sh"

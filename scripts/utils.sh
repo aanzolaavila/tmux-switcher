@@ -36,8 +36,36 @@ get_tmux_option() {
   fi
 }
 
+not_in_tmux() {
+  [ -z "$TMUX" ]
+}
+
 # Display tmux message in status bar
 display_tmux_message() {
   local message=$1
-  tmux display-message "tmux-bitwarden: $message"
+  tmux display-message "tmux-switcher: $message"
+}
+
+session_exists() {
+  local session_name=$1
+  tmux has-session -t "=$session_name"
+}
+
+create_detached_session() {
+  local session_name=$1
+  local selected=$2
+  (TMUX='' tmux new-session -Ad -s "$session_name" -c "$selected")
+}
+
+create_if_needed_and_attach() {
+  local session_name=$1
+  local selected=$2
+  if not_in_tmux; then
+    tmux new-session -As "$session_name" -c "$selected"
+  else
+    if ! session_exists "$session_name"; then
+      create_detached_session "$session_name" "$selected"
+    fi
+    tmux switch-client -t "$session_name"
+  fi
 }

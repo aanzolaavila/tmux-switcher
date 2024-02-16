@@ -17,7 +17,7 @@ main() {
   local locations
   locations=$(get_locations)
 
-  selected="$(fd --type d -H '.git$' "${locations}" | sed 's/\/.git\///' | fzf)" || return
+  selected="$(fd --type d -H '.git$' --no-ignore "${locations}" | sed 's/\/.git\///' | fzf)" || return
   session_name="$(basename "$selected" | tr . _)"
 
   create_if_needed_and_attach "$session_name" "$selected"
